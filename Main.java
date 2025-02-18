@@ -1,13 +1,11 @@
-// YOUR NAME: 
+// YOUR NAME: Sage Yosick
 // COLLABORATORS: 
-// DATE: 
+// DATE: 2/18/2025
 
 public class Main
 {
-    public static void main(String[] args)
-    {
         //ascii art credit: http://www.oocities.org/spunk1111/bodypart.htm
-        final String ASCII_ART_0 = "    .----.    .----.  ",
+        public static final String ASCII_ART_0 = "    .----.    .----.  ",
                 ASCII_ART_1 = "   (  --  \\  /  --  )",
                 ASCII_ART_2 = "          |  |        ",
                 ASCII_ART_3 = "         _/  \\_      ",
@@ -19,13 +17,17 @@ public class Main
                 ASCII_ART_9 = "         `\"\"\"\"\"` ",
                 ASCII_CREDIT = "   ascii art by: jgs    ";
 
-        final String TITLE_USA = "UNITED STATES OF AMERICA",
+        public static final String TITLE_USA = "UNITED STATES OF AMERICA",
                 TITLE_EAC = "EMPLOYMENT AUTHORIZATION CARD";
-        final String LABEL_SURNAME = "Surname", LABEL_GIVEN_NAME = "Given Name", LABEL_USCIS_NUM = "USCIS#",
+        public static final String LABEL_SURNAME = "Surname", LABEL_GIVEN_NAME = "Given Name", LABEL_USCIS_NUM = "USCIS#",
                 LABEL_CATEGORY = "Category", LABEL_CARD_NUM = "Card#", LABEL_BIRTH_COUNTRY = "Country of Birth",
                 LABEL_TERMS_CONDITIONS = "Terms and Conditions", LABEL_BIRTH_DATE = "Date of Birth",
                 LABEL_SEX = "Sex", LABEL_VALID_DATE = "Valid From:", LABEL_EXPIRE_DATE = "Card Expires:",
                 LABEL_REENTRY_DISCLAIMER = "NOT VALID FOR REENTRY TO U.S.";
+
+    public static void main(String[] args)
+    {
+       
 
         //DECLARATION SECTION
         //complete fields
@@ -41,41 +43,69 @@ public class Main
         String uscisNum, dateOfBirth, validDate, expireDate;
 
         //INITIALIZATION SECTION
-        surname = "CHAPETON-LAMAS";
-        givenName = "NERY";
-        uscisNum1 = 12;
-        uscisNum2 = 4;
-        uscisNum3 = 789;
-        category = "C09";
-        cardNum = "SRC9876543210";
-        birthCountry = "Guatemala";
-        termsAndConditions = "None";
+        surname = UtilityBelt.readString("Enter surname: ", 
+        0, 50); //"CHAPETON-LAMAS";
+        givenName = UtilityBelt.readString("Enter given name: ", 
+        0, 50); //"NERY";
+        category = UtilityBelt.readString("Enter category: ", 
+        0, 3); //"C09";
+        cardNum = UtilityBelt.readString("Enter card number: ", 
+        0, 13); //"SRC9876543210";
+        birthCountry = UtilityBelt.readString("Enter birth country: ", 
+        0, 50); //"Guatemala";
+        termsAndConditions = UtilityBelt.readString("Enter terms and conditions: ", 
+        0, 50); //"None";
+        sex = UtilityBelt.readChar("Enter sex: ", "FfMmNnIi"); //'M'; //note single quotes
 
-        birthDay = 1;
-        birthMonth = "JAN";
-        birthYear = 1970;
+        birthMonth = UtilityBelt.readString("Enter birth month: (as 3 letter acronym in ALL CAPS)", 
+        3, 3); //"JAN";
 
-        sex = 'M'; //note single quotes
+        uscisNum1 = UtilityBelt.readInt("Enter USCIS # part 1: ", 
+        0, 999); //12;
+        uscisNum2 = UtilityBelt.readInt("Enter USCIS # part 2: ", 
+        0, 999); //4;
+        uscisNum3 = UtilityBelt.readInt("Enter USCIS # part 3: ", 
+        0, 999); //789;
 
-        validMonth = 2;
-        validDay = 2;
-        validYear = 2020;
+        
+        birthDay = UtilityBelt.readInt("Enter birth day: ", 
+        1, 31); //1;
+        birthYear = UtilityBelt.readInt("Enter birth year: ", 
+        1700, 2025); //1970;
 
-        expireMonth = 2;
-        expireDay = 2;
-        expireYear = 2022;
+        validDay = UtilityBelt.readInt("Enter valid day: ", 
+        0, 31); //2;
+        validMonth = UtilityBelt.readInt("Enter valid month: ", 
+        1, 12); //2;
+        validYear = UtilityBelt.readInt("Enter valid year: ", 
+        1700, 2025); //2020;
+
+        expireMonth = UtilityBelt.readInt("Enter expiration month: ", 
+        1, 12); //2;
+        expireDay = UtilityBelt.readInt("Enter expiration day: ", 
+        0, 31); //2;
+        expireYear = UtilityBelt.readInt("Enter expiration year: ", 
+        1700, 2025); //2022;
 
         //Strings to help clean up long printf's below
         uscisNum = String.format("%03d-%03d-%03d", uscisNum1, uscisNum2, uscisNum3);
         dateOfBirth = String.format("%02d %s %d", birthDay, birthMonth, birthYear);
-        validDate = String.format("%02d/%02d/%4d", validMonth, validDay, validYear);
-        expireDate = String.format("%02d/%02d/%4d", expireMonth, expireDay, expireYear);
+        validDate = Main.formatDate(validMonth, validDay, validYear);
+        expireDate = Main.formatDate(expireMonth, expireDay, expireYear);
 
 
         //INPUT + CALCULATION SECTION
         //N/A
 
         //OUTPUT SECTION
+        Main.formatCard(surname, givenName, category, cardNum, birthCountry, termsAndConditions, sex, uscisNum, dateOfBirth, validDate, expireDate);
+    }
+
+    public static void formatCard(String surname, String givenName,
+    String category, String cardNum, String birthCountry, 
+    String termsAndConditions, char sex, String uscisNum, 
+    String dateOfBirth, String validDate, String expireDate)
+    {   
         System.out.printf("╔══════════════════════════════════════════════════════════════════════╗%n");
         System.out.printf("║%35s%35s║%n", TITLE_USA, "");
         System.out.printf("║%60s%10s║%n", TITLE_EAC, "");
@@ -95,5 +125,11 @@ public class Main
         System.out.printf("║%-25s%-15s%-30s║%n", "", LABEL_EXPIRE_DATE, expireDate);
         System.out.printf("║%-25s%-45s║%n", ASCII_CREDIT, LABEL_REENTRY_DISCLAIMER);
         System.out.printf("╚══════════════════════════════════════════════════════════════════════╝%n");
+
+    }
+
+    public static String formatDate(int month, int day, int year) {
+        return String.format("%02d/%02d/%4d", month, day, year);
+
     }
 }
